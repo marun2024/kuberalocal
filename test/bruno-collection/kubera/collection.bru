@@ -1,0 +1,43 @@
+docs {
+# Kubera API Collection for Bruno
+
+This Bruno collection contains all the API endpoints for the Kubera multi-tenant application.
+
+## Setup
+
+1. Install [Bruno](https://usebruno.com/)
+2. Open this collection in Bruno
+3. Select the "Local" environment
+4. Run the "Login" request first to authenticate
+5. The auth token will be automatically stored for subsequent requests
+
+## Environment Variables
+
+- `baseUrl`: http://localhost:8000
+- `apiVersion`: /api/v1
+- `tenantHost`: testcompany.localhost:8000
+- `authToken`: Set automatically after login
+- `vendorId`: Set automatically after creating a vendor
+
+## Request Flow
+
+1. **Authentication**: Run the Login request to get a JWT token
+2. **Health Check**: Verify the API is running
+3. **Vendors**: Create, read, update, delete vendors (requires authentication)
+4. **Tenants**: List tenants (admin operations)
+
+## Multi-Tenant Testing
+
+The collection is configured to use `testcompany.localhost:8000` as the tenant host. Make sure to:
+
+1. Add `127.0.0.1 testcompany.localhost` to your `/etc/hosts` file
+2. Have the test tenant seeded with `uv run poe seed --developer testcompany`
+3. Use the credentials: `testcompany@testco.com` / `password123`
+
+## Notes
+
+- All vendor operations require the `Host` header to be set for tenant isolation
+- The auth token is automatically passed via Bearer authentication
+- Test assertions are included to validate responses
+- Variable substitution is used for dynamic values (IDs, tokens)
+}

@@ -1,0 +1,47 @@
+meta {
+  name: Create Vendor
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}{{apiVersion}}/vendors
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Host: {{tenantHost}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "Test Vendor",
+    "email": "vendor@test.com",
+    "phone": "+1-555-0123",
+    "address": "123 Test Street",
+    "city": "Test City",
+    "state": "TS",
+    "country": "USA",
+    "postal_code": "12345",
+    "tax_id": "12-3456789"
+  }
+}
+
+tests {
+  test("Create vendor successful", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()).to.have.property('id');
+    expect(res.getBody().name).to.equal('Test Vendor');
+  });
+  
+  // Store vendor ID for other requests
+  if (res.getStatus() === 200) {
+    bru.setVar("vendorId", res.getBody().id);
+  }
+}

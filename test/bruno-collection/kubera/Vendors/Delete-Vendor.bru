@@ -1,0 +1,26 @@
+meta {
+  name: Delete Vendor
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{baseUrl}}{{apiVersion}}/vendors/{{vendorId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Host: {{tenantHost}}
+}
+
+tests {
+  test("Delete vendor successful", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()).to.have.property('message');
+  });
+}

@@ -1,0 +1,35 @@
+meta {
+  name: Update Tags
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{baseUrl}}{{apiVersion}}/tags/8
+  body: json
+  auth: bearer
+}
+
+headers {
+  Host: {{tenantHost}}
+  Content-Type: application/json
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+body:json {
+  {
+    "name": "Updated Test Vendor8",
+    "created_at":"2026-03-03"
+  }
+}
+
+tests {
+  test("Update vendor successful", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()).to.have.property('id');
+    expect(res.getBody().name).to.equal('Updated Test Vendor');
+  });
+}

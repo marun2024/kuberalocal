@@ -1,0 +1,35 @@
+meta {
+  name: Update Vendor
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{baseUrl}}{{apiVersion}}/vendors/{{vendorId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Host: {{tenantHost}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "Updated Test Vendor",
+    "phone": "+1-555-9999"
+  }
+}
+
+tests {
+  test("Update vendor successful", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()).to.have.property('id');
+    expect(res.getBody().name).to.equal('Updated Test Vendor');
+  });
+}

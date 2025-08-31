@@ -1,0 +1,26 @@
+meta {
+  name: List Contracts
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}{{apiVersion}}/contracts
+  body: none
+  auth: bearer
+}
+
+headers {
+  Host: {{tenantHost}}
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+tests {
+  test("List contracts successful", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()).to.be.an('array');
+  });
+}

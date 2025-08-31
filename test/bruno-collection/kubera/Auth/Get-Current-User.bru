@@ -1,0 +1,23 @@
+meta {
+  name: Get Current User
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}{{apiVersion}}/auth/me
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+tests {
+  test("Get user info successful", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()).to.have.property('email');
+    expect(res.getBody()).to.have.property('tenant_name');
+  });
+}

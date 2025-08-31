@@ -1,0 +1,26 @@
+meta {
+  name: List Vendors
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}{{apiVersion}}/vendors
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Host: {{tenantHost}}
+}
+
+tests {
+  test("List vendors successful", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()).to.be.an('array');
+  });
+}

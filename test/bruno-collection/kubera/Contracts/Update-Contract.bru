@@ -1,0 +1,35 @@
+meta {
+  name: Update Contract
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{baseUrl}}{{apiVersion}}/contracts/{{contractId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Host: {{tenantHost}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "title": "ACME SaaS Subscription - Renewed",
+    "notes": "Updated title via Bruno PATCH"
+  }
+}
+
+tests {
+  test("Update contract successful", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()).to.have.property('id');
+    expect(res.getBody().title).to.equal('ACME SaaS Subscription - Renewed');
+  });
+}

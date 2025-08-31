@@ -1,0 +1,26 @@
+meta {
+  name: Search Contracts
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/api/v2/contracts/search?q={{searchTerm}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Host: {{tenantHost}}
+}
+
+tests {
+  test("Search contracts successful", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()).to.be.an('array');
+  });
+}

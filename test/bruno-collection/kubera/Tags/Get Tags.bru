@@ -1,0 +1,27 @@
+meta {
+  name: Get Tags
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}{{apiVersion}}/tags/5
+  body: none
+  auth: bearer
+}
+
+headers {
+  Host: {{tenantHost}}
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+tests {
+  test("Get vendor successful", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()).to.have.property('id');
+    expect(res.getBody()).to.have.property('name');
+  });
+}

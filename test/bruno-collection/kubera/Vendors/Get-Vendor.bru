@@ -1,0 +1,27 @@
+meta {
+  name: Get Vendor
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}{{apiVersion}}/vendors/{{vendorId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Host: {{tenantHost}}
+}
+
+tests {
+  test("Get vendor successful", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()).to.have.property('id');
+    expect(res.getBody()).to.have.property('name');
+  });
+}

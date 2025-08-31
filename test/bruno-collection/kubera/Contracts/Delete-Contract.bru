@@ -1,0 +1,25 @@
+meta {
+  name: Delete Contract
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{baseUrl}}{{apiVersion}}/contracts/{{contractId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Host: {{tenantHost}}
+}
+
+tests {
+  test("Delete contract successful", function() {
+    expect(res.getStatus()).to.be.oneOf([200, 204]);
+  });
+}

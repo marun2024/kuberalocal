@@ -1,0 +1,40 @@
+meta {
+  name: Create Tags
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}{{apiVersion}}/tags
+  body: json
+  auth: bearer
+}
+
+headers {
+  Host: {{tenantHost}}
+  Content-Type: application/json
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+body:json {
+  {
+      "name": "Tech Data 2",
+      "created_at": "2025-02-03"
+  }
+}
+
+tests {
+  test("Create vendor successful", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()).to.have.property('id');
+    expect(res.getBody().name).to.equal('Test Vendor');
+  });
+  
+  // Store vendor ID for other requests
+  if (res.getStatus() === 200) {
+    bru.setVar("vendorId", res.getBody().id);
+  }
+}
